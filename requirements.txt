@@ -1,0 +1,28 @@
+# Flask
+Flask==1.0.2
+
+# web fronter
+Flask-Bootstrap==3.3.7.1
+
+# mysql
+Flask-SQLAlchemy==2.3.2
+Flask-Migrate==2.3.0
+PyMySQL==0.9.2
+
+
+# email
+Flask-Mail==0.9.1
+
+#restful
+Flask-RESTful==0.3.6
+
+# cmdline
+Flask-Script==2.0.6
+
+# login and  auth
+flask-login==0.4.1
+flask-httpauth==3.2.4
+
+
+
+

@@ -6,17 +6,16 @@ from flask import render_template, abort
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 
-
 from albumy.app import create_app
 
-from albumy.settings import BaseConfig,DevConfig
+from albumy.settings import BaseConfig, DevConfig
 from albumy.models import *
 
 config = DevConfig
 app = create_app(config=config)
 manager = Manager(app)
-Migrate(app,db)
-manager.add_command("db",MigrateCommand)
+Migrate(app, db)
+manager.add_command("db", MigrateCommand)
 
 
 @app.route("/<regex('\w*\.{0,1}\w*'):filename>")
@@ -28,12 +27,6 @@ def static_manager(filename):
             return render_template(filename)
     else:
         return render_template("404.html")
-
-
-
-
-
-
 
 
 if __name__ == '__main__':
