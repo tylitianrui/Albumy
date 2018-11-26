@@ -5,11 +5,16 @@ from werkzeug.routing import BaseConverter
 
 
 class AlbumyBaseConverter(BaseConverter):
-    pass
+    def get_converter_name(self):
+        raise NotImplementedError
 
 
 class RegexConverter(AlbumyBaseConverter):
-    def __init__(self,url_map,regex):
-        super(RegexConverter, self).__init__(url_map)
-        self.regex=regex
+    """转换器"""
 
+    def __init__(self, url_map, regex):
+        super(RegexConverter, self).__init__(url_map)
+        self.regex = regex
+
+    def get_converter_name(self):
+        return "RegexConverter"
