@@ -4,7 +4,7 @@
 from flask import Flask
 
 
-from albumy.extensions import db,bootstrap
+from albumy.extensions import db, bootstrap, bcrypt, mail
 
 
 def create_app(config):
@@ -19,6 +19,8 @@ def create_app(config):
 def init_extensions(app):
     db.init_app(app)
     bootstrap.init_app(app)
+    bcrypt.init_app(app)
+    mail.init_app(app)
     return None
 
 

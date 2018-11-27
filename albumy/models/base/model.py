@@ -4,10 +4,10 @@
 from datetime import datetime as dt
 
 from albumy.extensions import db
-from albumy.models.base.mixin import CURDMixin
+from albumy.models.base.mixin import CRUDMixin
 
 
-class BaseModel(CURDMixin, db.Model):
+class BaseModel(CRUDMixin, db.Model):
     """model的基类"""
     __abstract__ = True  # 设置抽象类
     # 创建 更新时间

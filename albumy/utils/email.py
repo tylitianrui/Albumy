@@ -2,3 +2,5 @@
 # AUTHOR:tyltr
 # TIME :2018/11/23
 
+def send_mail():
+    pass

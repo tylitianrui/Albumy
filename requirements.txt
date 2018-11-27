@@ -22,6 +22,14 @@ Flask-Script==2.0.6
 # login and  auth
 flask-login==0.4.1
 flask-httpauth==3.2.4
+flask-bcrypt==0.7.1
+
+
+# celery
+celery ==4.2.1
+
+# redis
+ redis==3.0.1
 
 
 
