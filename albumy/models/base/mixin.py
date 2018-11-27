@@ -41,14 +41,15 @@ class CRUDMixin(object):
         return commit and db.session.commit()
 
     @classmethod
-    def is_exist(cls, kv):
+    def is_exist(cls, **kv):
         """
             判断某字段k上是否有某值v
             :param kv: {k:v}
             :return:
             """
         kv.update({"id_deleted": False})
-        if cls.query.filter_by(**kv).first():
+        _instance = cls(**kv)
+        if _instance.query.filter_by(**kv).first():
             return True
         return False
 
@@ -62,7 +63,7 @@ class DeclarePK(object):
 
 
 class PasswordUserMixin(UserMixin):
-    password = db.Column(db.String(128), nullable=True)
+    password_hash = db.Column(db.String(128), nullable=True)
 
     def set_hash_password(self, password, commit=True):
         """
@@ -72,7 +73,7 @@ class PasswordUserMixin(UserMixin):
         :return:
         """
         # 密码
-        self.password = bcrypt.generate_password_hash(password)
+        self.password_hash = bcrypt.generate_password_hash(password)
         if commit:
             self.save()
 
@@ -96,3 +97,7 @@ class PasswordUserMixin(UserMixin):
     @property
     def password(self):
         return "无权限"
+
+    @password.setter
+    def password(self,password):
+        self.set_hash_password(password)
