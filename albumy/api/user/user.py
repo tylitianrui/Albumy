@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from flask_restful import reqparse
 
+from albumy.common.excptions import BadRequestException
 from albumy.common.restful import RestfulBase, success_resp
 from albumy.models import User as Usermodel
 from albumy.utils.email import send_mail
 from albumy.utils.gen_default import gen_user_name
-from albumy.utils.validate import validate_password, validate_email, validate_mobile
+from albumy.utils.validate import validate_password, validate_email, validate_mobile, validate_username
 from albumy.utils.verification_code import random_int_code
 
 
@@ -13,15 +14,16 @@ class User(RestfulBase):
 
     def post(self):
         req = reqparse.RequestParser()
-
         req.add_argument("type", choices=["mobile", "email"], required=True, location=["json"])
         req.add_argument("mobile", type=validate_mobile, default="", location=["json"])
         req.add_argument("email", type=validate_email, default="", location=["json"])
         req.add_argument("password", type=validate_password, default="", location=["json"])
         req.add_argument("password_repeat", type=validate_password, default="", location=["json"])
-        req.add_argument("user_name", type=str,default="", location=["json"])
+        req.add_argument("user_name", type=validate_username,default="", location=["json"])
+
         args = req.parse_args()
-        # todo  type
+
+        print(args["password"])
         print(args["password"])
         print(args["email"])
         if args["type"] == "mobile":

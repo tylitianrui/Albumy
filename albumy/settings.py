@@ -7,8 +7,8 @@ class BaseConfig(object):
     SECRET_KEY = "w1rr1lelsnvorhjfob2ctc*!@adcvgtvrt@@1"
     # mysql
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    # SQLALCHEMY_DATABASE_URI = 'mysql://root:@localhost:3306/albumy?charset=utf8mb4'
-    SQLALCHEMY_DATABASE_URI = 'mysql://root:lttrrr035499@localhost:3306/albumy?charset=utf8mb4'
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:@localhost:3306/albumy?charset=utf8mb4'
+    # SQLALCHEMY_DATABASE_URI = 'mysql://root:lttrrr035499@localhost:3306/albumy?charset=utf8mb4'
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
 
     # redis
