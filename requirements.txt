@@ -29,7 +29,7 @@ flask-bcrypt==0.7.1
 celery ==4.2.1
 
 # redis
- redis==3.0.1
+redis==2.10.6
 
 
 

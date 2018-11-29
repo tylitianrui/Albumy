@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
+from flask_mail import Message
 from flask_restful import reqparse
 
-from albumy.common.excptions import BadRequestException
 from albumy.common.restful import RestfulBase, success_resp
+from albumy.extensions import mail
 from albumy.models import User as Usermodel
 from albumy.utils.email import send_mail
 from albumy.utils.gen_default import gen_user_name
@@ -19,13 +20,8 @@ class User(RestfulBase):
         req.add_argument("email", type=validate_email, default="", location=["json"])
         req.add_argument("password", type=validate_password, default="", location=["json"])
         req.add_argument("password_repeat", type=validate_password, default="", location=["json"])
-        req.add_argument("user_name", type=validate_username,default="", location=["json"])
-
+        req.add_argument("user_name", type=validate_username, default="", location=["json"])
         args = req.parse_args()
-
-        print(args["password"])
-        print(args["password"])
-        print(args["email"])
         if args["type"] == "mobile":
             if not args["mobile"]:
                 return
@@ -36,7 +32,6 @@ class User(RestfulBase):
                     return
                 code = random_int_code()
                 return success_resp(data=code)
-
 
                 # 　发送验证码
 
@@ -50,23 +45,23 @@ class User(RestfulBase):
                 if Usermodel.is_exist(email=args["email"]):
                     return
 
-                _fields={
+                _fields = {
                     #
-                    "user_no":1,
-                    "email":args["email"],
-                    "mobile":args["mobile"],
-                    "active":False,
-                    "user_name":args["user_name"] if args["user_name"] else gen_user_name(),
-                    "password":args["password"]
+                    "user_no": 1,
+                    "email": args["email"],
+                    "mobile": args["mobile"],
+                    "active": False,
+                    "user_name": args["user_name"] if args["user_name"] else gen_user_name(),
+                    "password": args["password"]
                 }
-                print(_fields)
+
                 code = random_int_code()
 
-
-
-
-
                 # 发送邮件激活
+                msg = Message(subject="Hello World!",
+                              sender="tyltr_test@126.com",
+                              recipients=["913173651@qq.com"])
+                mail.send(msg)
                 return success_resp(data=code)
 
         return args
