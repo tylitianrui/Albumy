@@ -1,6 +1,7 @@
 # -*-coding:utf-8-*-
 # AUTHOR:tyltr
 # TIME :2018/11/20
+
 from albumy.constant import *
 from flask import render_template, abort
 from flask_migrate import Migrate, MigrateCommand
@@ -8,12 +9,14 @@ from flask_script import Manager
 
 from albumy.app import create_app
 
-from albumy.settings import BaseConfig, DevConfig
+from albumy.settings import BaseConfig, DevConfig, get_config
 from albumy.models import *
 
-config = DevConfig
+config = get_config()
 app = create_app(config=config)
+# print(app.name)
 manager = Manager(app)
+
 Migrate(app, db)
 manager.add_command("db", MigrateCommand)
 

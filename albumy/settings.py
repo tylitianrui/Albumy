@@ -22,12 +22,29 @@ class BaseConfig(object):
     MAIL_PASSWORD = 'qaz2y34sXcf1'
     MAIL_SENDER = u"tyltr <tyltr_test@126.com>"
 
-    # celery
+    # celery 配置
     CELERY_BROKER_URL = "redis://localhost:6379/1"
     CELERY_RESULT_BACKEND = "redis://localhost:6379/1"
+    # 任务序列化反序列化采用 msgpack，任务结果采用json
+    # todo ltr{doc}ltr
+    """
+    msgpack  json 都是数据交换的格式
+    但是msgpack是二进制文件，比json性能更加高，而且更小
+    但json的可读性高
+    
+    """
+    CELERY_TASK_SERIALIZER = "msgpack"
+    CELERY_RESULT_SERIALIZER = "json"  # 读取任务结果一般对性能的要求不高，所以使用可读性更好的json
+
+    # 任务的过期时间
+    CELERY_TASK_RESULT_EXPIRES = 60 * 60 * 24
+
+    # 接受的内容类型
+    CELERY_ACCEPT_CONTENT = ["json", "msgpack"]
 
 
 class DevConfig(BaseConfig):
+
     DEBUG = True
 
 
@@ -36,4 +53,4 @@ class ProdConfig(BaseConfig):
 
 
 def get_config():
-    pass
+    return DevConfig

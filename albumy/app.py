@@ -3,16 +3,16 @@
 # TIME :2018/11/20
 from flask import Flask
 
-
 from albumy.extensions import db, bootstrap, bcrypt, mail
 
 
-def create_app(config):
+def create_app(config,celery=False):
     app = Flask(__name__)
     app.config.from_object(config)
     init_extensions(app)
-    register_blueprint(app)
-    regiester_convreter(app)
+    if not celery:
+        register_blueprint(app)
+        regiester_convreter(app)
     return app
 
 
@@ -27,9 +27,9 @@ def init_extensions(app):
 def register_blueprint(app):
     from albumy.api.user import user_blueprint
     app.register_blueprint(user_blueprint)
-
-
     return None
+
+
 
 
 def regiester_convreter(app):
