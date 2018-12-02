@@ -21,6 +21,7 @@ def init_extensions(app):
     bootstrap.init_app(app)
     bcrypt.init_app(app)
     mail.init_app(app)
+    # cache.init_app(app)
     return None
 
 

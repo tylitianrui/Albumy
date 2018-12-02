@@ -43,3 +43,4 @@ def validate_fail(field, msg=""):
     if msg:
         _msg += msg
     raise Exception(_msg)
+

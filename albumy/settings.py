@@ -1,9 +1,12 @@
 # -*-coding:utf-8-*-
 # AUTHOR:tyltr
 # TIME :2018/11/20
+import os
 
 
 class BaseConfig(object):
+    BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
     SECRET_KEY = "w1rr1lelsnvorhjfob2ctc*!@adcvgtvrt@@1"
     # mysql
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -11,7 +14,8 @@ class BaseConfig(object):
     SQLALCHEMY_DATABASE_URI = 'mysql://root:lttrrr035499@localhost:3306/albumy?charset=utf8mb4'
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
 
-    # redis
+    # # redis 缓存
+    CACHE_REDIS_URL = "redis://localhost:6379/2"
 
     # 邮件
     MAIL_SERVER = 'smtp.126.com'
@@ -42,9 +46,12 @@ class BaseConfig(object):
     # 接受的内容类型
     CELERY_ACCEPT_CONTENT = ["json", "msgpack"]
 
+    @classmethod
+    def get(cls, key):
+        return getattr(cls, key)
+
 
 class DevConfig(BaseConfig):
-
     DEBUG = True
 
 
@@ -54,3 +61,7 @@ class ProdConfig(BaseConfig):
 
 def get_config():
     return DevConfig
+
+
+if __name__ == '__main__':
+    os.path.dirname(os.path.dirname(__file__))

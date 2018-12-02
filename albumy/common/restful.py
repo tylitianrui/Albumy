@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
-from flask.json import jsonify
 from flask_restful import Resource
 
 from albumy.common.excptions import AlbBaseException, BadRequestException, UnauthorizedException, ForbiddenException, \
     NotFoundException
+from albumy.settings import BaseConfig
+from albumy.utils.cache import get_cache_redis
 
 
 class RestfulBase(Resource):
-    pass
+
+
+    cache_redis =get_cache_redis(BaseConfig.get("CACHE_REDIS_URL"))
 
 
 def success_resp( status_code=200, message="message",data=None):

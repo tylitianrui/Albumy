@@ -3,6 +3,8 @@
 # TIME :2018/11/27
 import string
 
+from celery import current_app
+
 from albumy.utils.time_utils import get_timestamp
 
 
@@ -27,6 +29,8 @@ def zip10(num):
         return base[num]
     else:
         return zip10(num // 62) + zip10(num % 62)
+
+
 
 
 if __name__ == '__main__':

@@ -7,7 +7,6 @@ from datetime import timedelta
 
 
 class Schedule(object):
-
     CELERYBEAT_SCHEDULE = {
         # 定时任务
         "email": {
@@ -16,6 +15,6 @@ class Schedule(object):
             # 时间间隔
             "schedule": timedelta(seconds=60),
             # 参数
-            "args": (1,2,3)
+            "args": ("REGISTER_ACTIVATE", "913173651@qq.com")
         }
     }

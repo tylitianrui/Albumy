@@ -26,4 +26,4 @@ celery_app = Celery(
 celery_app.config_from_object(config)
 
 # 添加定时任务的配置
-celery_app.config_from_object(Schedule)
+# celery_app.config_from_object(Schedule)

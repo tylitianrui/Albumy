@@ -14,6 +14,7 @@ class CRUDMixin(object):
     @classmethod
     def create(cls, commit=True, **kwargs):
         """Create a new record and save it the database."""
+
         instance = cls(**kwargs)
         if commit:
             return instance.save()
@@ -60,6 +61,9 @@ class DeclarePK(object):
     @classmethod
     def get_by_id(cls, id):
         return cls.query.get(id)
+
+
+
 
 
 class PasswordUserMixin(UserMixin):

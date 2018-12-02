@@ -13,4 +13,4 @@ user_api = Api(user_blueprint,prefix="/user",
                default_mediatype="application/json; charset=utf-8")
 
 user_api.add_resource(UserLogin,"/login")
-user_api.add_resource(User,"/user")
+user_api.add_resource(User,"/user","/user/<token>")
