@@ -16,7 +16,7 @@ EMAIL_TOPIC = {
         "subject":"激活账号",
         "body":"激活账号：url {}".format(1),
         # "resource":"https://img-blog.csdnimg.cn/20181104102458943.png",
-        "resource":"/Users/tyltr/mySpace/Albumy/Albumy/albumy/static/image/desktop.jpg",
+        "resource":"/Users/tyltr/mySpace/Albumy/Albumy/albumy/static/image/attachment_test_jpg.jpg",
 
 
 

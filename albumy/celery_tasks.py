@@ -18,7 +18,7 @@ def send_email(topic,recipients,**kwargs):
 
     if topic:
         topic.update(kwargs)
-        print(topic)
+
         msg = Message(
             # 主题
             subject=topic.get("subject"),

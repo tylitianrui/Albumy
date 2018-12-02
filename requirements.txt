@@ -30,6 +30,7 @@ celery ==4.2.1
 
 # redis
 redis==2.10.6
+flask-cache==0.13.1
 
 
 
