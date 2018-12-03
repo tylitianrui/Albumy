@@ -1,0 +1,16 @@
+---
+config_name: prod
+git_repo: github.com:tylitianrui
+git_deploy_version: master
+debug_enabled: True
+http_protocol: https
+uwsgi_port_rouchi: 111020
+uwsgi_env: prod
+email_debug: False
+sqlalchemy_database_uri: 'mysql://root:lttrrr035499@localhost:3306/albumy?charset=utf8mb4'
+is_node: False
+celery_redis_url: "redis://localhost:6379/1"
+cache_redis_url: "redis://localhost:6379/2"
+redis_bind_interface: 127.0.0.1
+cache_redis_db: 0
+celery_redis_db: 1
