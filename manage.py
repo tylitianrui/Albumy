@@ -23,8 +23,12 @@ manager = Manager(app)
 Migrate(app, db)
 manager.add_command("db", MigrateCommand)
 
+@app.route("/")
+def hello():
+    return  "hello"
 
-@app.route("/<regex('\w*\.{0,1}\w*'):filename>")
+
+@app.route("/static/<regex('\w*\.{0,1}\w*'):filename>")
 def static_manager(filename):
     # 设置可以被访问的静态文件
 
