@@ -80,11 +80,11 @@ class User(RestfulBase):
                     User.cache_redis.setex("register_token_user_id_{}".format(_user.id), time=60, value=t)
                 except :
                     return "err redis"
-                try:
-                    send_email.delay("REGISTER_ACTIVATE", args["email"],
-                                 body="http://localhost:5000/api/user/user/{}".format(t))
-                except:
-                    return "send"
+                # try:
+                #     send_email.delay("REGISTER_ACTIVATE", args["email"],
+                #                  body="http://localhost:5000/api/user/user/{}".format(t))
+                # except:
+                #     return "send"
 
                 return success_resp(data="http://localhost:5000/api/user/user/{}".format(t))
 
