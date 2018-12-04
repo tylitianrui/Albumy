@@ -4,9 +4,9 @@
 
 - name: Copy nginx config
   template: |
-    src=albumy_nginx.conf dest=/etc/nginx/sites-enabled/rouchi_{{ config_name }}
+    src=albumy_nginx.conf dest=/etc/nginx/sites-enabled/albumy_nginx.conf
     owner=root group=root
 
 - name: Reload nginx
-  service: name=nginx state=reloaded
+  service: name=nginx state=restarted
 
