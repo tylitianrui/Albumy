@@ -85,3 +85,11 @@ class User(RestfulBase):
                                  body="http://localhost:5000/api/user/user/{}".format(t))
 
                 return success_resp()
+
+
+
+class UserTest(RestfulBase):
+    def get(self):
+        return {
+            "test":"ok"
+        }
