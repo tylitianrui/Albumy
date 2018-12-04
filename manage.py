@@ -23,9 +23,10 @@ manager = Manager(app)
 Migrate(app, db)
 manager.add_command("db", MigrateCommand)
 
-@app.route("/")
+@app.route("/test")
 def hello():
     return  "hello"
+
 
 
 @app.route("/static/<regex('\w*\.{0,1}\w*'):filename>")

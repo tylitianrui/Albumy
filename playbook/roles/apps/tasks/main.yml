@@ -26,10 +26,14 @@
   #pip: virtualenv={{ venv_dir }} requirements={{ source_dir }}/requirements/prod.txt extra_args="-i http://pypi.douban.com/simple"
   pip: virtualenv={{ venv_dir }} requirements={{ source_dir }}/requirements.txt
 
-- name: Copy uwsgi init script
-  template: |
-    src=uwsgi-albumy.conf dest=/etc/init/albumy_{{ config_name }}.conf
-    owner=root group=root
+- name: install ﻿supervisor
+  pip: name=supervisor
+
+
+#- name: Copy uwsgi init script
+#  template: |
+#    src=uwsgi-albumy.conf dest=/etc/init/albumy_{{ config_name }}.conf
+#    owner=root group=root
 
 - name: Create uwsgi emperor directory
   file: |
@@ -46,15 +50,15 @@
     path={{ log_dir }} state=directory
     owner=root group=root
 
-- name: Create data_dir
-  file: |
-    path={{ data_dir }} state=directory
-    owner=www-data group=www-data
+#- name: Create data_dir
+#  file: |
+#    path={{ data_dir }} state=directory
+#    owner=www-data group=www-data
 
-- name: Create tmp_dir
-  file: |
-    path={{ tmp_dir }} state=directory
-    owner=www-data group=www-data
+#- name: Create tmp_dir
+#  file: |
+#    path={{ tmp_dir }} state=directory
+#    owner=www-data group=www-data
 
 #- name: Create symlink of data_dir
 #  file: |
@@ -65,7 +69,7 @@
 
 - name: Copy uwsgi emperor configurations
   template: |
-    src={{ item }}.ini dest={{ uwsgi_emperor_dir }}/{{ item }}.ini
+    src={{ item }}.ini.tml dest={{ uwsgi_emperor_dir }}/{{ item }}.ini
     owner=www-data group=www-data
   with_items:
     - albumy
@@ -73,6 +77,11 @@
 - name: Copy app settings.py 
   template: |
     src=settings.py.tml dest={{ source_dir }}/albumy/settings.py
+    owner=www-data group=www-data
+
+- name: Copy supervisor ini
+  template: |
+    src=supervisor_albumy.conf.tml dest=/etc/supervisor/conf.d/supervisor_albumy.conf
     owner=www-data group=www-data
 
 
@@ -107,7 +116,7 @@
     mode="u+x,g+x,o+x"
 
 - name: Run app-server
-  service: name=albumy_{{ config_name }} state=restarted
+  service: name=supervisor  state=restarted
 
 - name: Run celery
   service: name=albumy-{{ config_name }}-worker state=restarted

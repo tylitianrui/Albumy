@@ -1,5 +1,5 @@
 ---
-- name: install albumr project
+- name: install albumy project
   hosts: all
   user: root
   sudo: yes

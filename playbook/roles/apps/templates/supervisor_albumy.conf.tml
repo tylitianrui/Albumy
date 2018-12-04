@@ -1,0 +1,7 @@
+[program:albumy]
+command={{venv_dir}}/bin/uwsgi {{ uwsgi_emperor_dir }}/albumy.ini
+directory={{source_dir}}
+user=root
+autostart=true
+autorestart=true
+stdout_logfile={{log_dir}}/uwsgi_supervisor.log
