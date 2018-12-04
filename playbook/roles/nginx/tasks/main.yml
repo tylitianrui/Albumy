@@ -1,0 +1,12 @@
+---
+- name: Install Nginx package
+  apt: pkg=nginx state=present
+
+- name: Copy nginx config
+  template: |
+    src=albumy_nginx.conf dest=/etc/nginx/sites-enabled/rouchi_{{ config_name }}
+    owner=root group=root
+
+- name: Reload nginx
+  service: name=nginx state=reloaded
+

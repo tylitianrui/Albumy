@@ -1,0 +1,2 @@
+*/5 * * * * root ROUCHI_ENV={{ uwsgi_env }} {{ venv_dir }}/bin/python {{ source_dir }}/manage.py script cron_notify_official  >> {{ log_dir }}/rouchi_{{ config_name }}_cron.log 2>&1
+*/1 * * * * root ROUCHI_ENV={{ uwsgi_env }} {{ venv_dir }}/bin/python {{ source_dir }}/manage.py script cron_catch_orders  >> {{ log_dir }}/rouchi_{{ config_name }}_cron.log 2>&1
