@@ -1,6 +1,6 @@
 # Names of nodes to start
 #   most people will only start one node:
-CELERYD_NODES="jingdong-orders-{{ config_name }}-worker1"
+CELERYD_NODES="albumy-{{ config_name }}-worker1"
 #   but you can also start multiple and configure settings
 #   for each in CELERYD_OPTS (see `celery multi --help` for examples):
 #CELERYD_NODES="worker1 worker2 worker3"

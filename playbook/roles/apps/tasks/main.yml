@@ -121,3 +121,5 @@
 - name: Run celery
   service: name=albumy-{{ config_name }}-worker state=restarted
 
+
+

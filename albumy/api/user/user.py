@@ -15,8 +15,6 @@ from albumy.utils.verification_code import random_int_code
 
 
 class User(RestfulBase):
-
-
     def get(self, token):
         if not token:
             return
@@ -59,13 +57,13 @@ class User(RestfulBase):
 
         if args["type"] == "email":
             if not args["email"]:
-                return
+                return "email"
             else:
                 if args["password"] != args["password_repeat"]:
                     return
                 # 　　判断是否已经注册
                 if Usermodel.is_exist(email=args["email"]):
-                    return
+                    return "yijingzhuce"
 
                 _fields = {
                     "email": args["email"],
@@ -78,13 +76,14 @@ class User(RestfulBase):
                 _user = Usermodel.create(**_fields)
 
                 t = generate_confirm_token(_user.id).decode("utf-8")
-
-                User.cache_redis.setex("register_token_user_id_{}".format(_user.id), time=60, value=t)
-
+                try:
+                    User.cache_redis.setex("register_token_user_id_{}".format(_user.id), time=60, value=t)
+                except Exception as e:
+                    return e
                 send_email.delay("REGISTER_ACTIVATE", args["email"],
                                  body="http://localhost:5000/api/user/user/{}".format(t))
 
-                return success_resp()
+                return success_resp(data=t)
 
 
 
