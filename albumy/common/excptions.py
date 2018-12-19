@@ -9,6 +9,7 @@ class AlbBaseException(Exception):
         self.code = code
         self.message = message
         self.data = data
+        self.tojson = self.__str__
 
     def __str__(self):
         return json.dumps({
@@ -16,13 +17,6 @@ class AlbBaseException(Exception):
             'message': self.message,
             'data': self.data,
         })
-
-    def __repr__(self):
-        return {
-            'code': self.code,
-            'message': self.message,
-            'data': self.data,
-        }
 
 
 class BadRequestException(AlbBaseException):
@@ -51,3 +45,8 @@ class NotFoundException(AlbBaseException):
 
     def __init__(self, code=404, message=None, data=None):
         super(NotFoundException, self).__init__(code, message, data)
+
+
+if __name__ == '__main__':
+    print(AlbBaseException(200, "", ""))
+    print(NotFoundException())

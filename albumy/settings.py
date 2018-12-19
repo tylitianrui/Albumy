@@ -11,11 +11,11 @@ class BaseConfig(object):
     # mysql
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     # SQLALCHEMY_DATABASE_URI = 'mysql://root:@localhost:3306/albumy?charset=utf8mb4'
-    SQLALCHEMY_DATABASE_URI = 'mysql://root:lttrrr035499@localhost:3306/albumy?charset=utf8mb4'
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:@localhost:3306/albumy?charset=utf8mb4'
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
 
     # # redis 缓存
-    CACHE_REDIS_URL = "redis://localhost:6379/2"
+    CACHE_REDIS_URL = "redis://@localhost:6379/2"
 
     # 邮件
     MAIL_SERVER = 'smtp.126.com'
@@ -58,9 +58,13 @@ class DevConfig(BaseConfig):
 class ProdConfig(BaseConfig):
     pass
 
+class LocalConfig(BaseConfig):
+    DEBUG=True
+
+
 
 def get_config():
-    return DevConfig
+    return LocalConfig
 
 
 if __name__ == '__main__':

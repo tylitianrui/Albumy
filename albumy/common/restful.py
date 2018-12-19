@@ -8,12 +8,10 @@ from albumy.utils.cache import get_cache_redis
 
 
 class RestfulBase(Resource):
+    cache_redis = get_cache_redis(BaseConfig.get("CACHE_REDIS_URL"))
 
 
-    cache_redis =get_cache_redis(BaseConfig.get("CACHE_REDIS_URL"))
-
-
-def success_resp( status_code=200, message="message",data=None):
+def _resp(status_code=200, message="ok", data=None):
     """
 
     :param message:
@@ -22,7 +20,7 @@ def success_resp( status_code=200, message="message",data=None):
     :return:
     """
     result = {
-        "code": 0,
+        "code": status_code,
         "message": message
     }
     if data:
@@ -30,24 +28,24 @@ def success_resp( status_code=200, message="message",data=None):
     return result, status_code
 
 
-def raise_error_response(error_code, message='error', data=None):
-    raise AlbBaseException(error_code, message, data)
+def success_response(status_code=200, message="ok", data=None):
+    return _resp(status_code, message, data)
 
 
-def raise_400_response(code=400, message=u'请求参数错误', data=None):
-    raise BadRequestException(code=code, message=message, data=data)
+def raise_400_response(status_code=400, message=u'请求参数错误', data=None):
+    return _resp(status_code,message,data)
 
 
-def raise_401_response(code=401, message=u'请求未授权', data=None):
-    raise UnauthorizedException(code=code, message=message, data=data)
+def raise_401_response(status_code=401, message=u'请求未授权', data=None):
+    return _resp(status_code, message, data)
+    # raise UnauthorizedException(code=code, message=message, data=data)
 
 
-def raise_403_response(code=403, message=u'请求被拒绝', data=None):
-    raise ForbiddenException(code=code, message=message, data=data)
+def raise_403_response(status_code=403, message=u'请求被拒绝', data=None):
+    return _resp(status_code, message, data)
+    # raise ForbiddenException(code=code, message=message, data=data)
 
 
-def raise_404_response(code=404, message=u'未找到', data=None):
-    raise NotFoundException(code=code, message=message, data=data)
-
-
-
+def raise_404_response(status_code=404, message=u'未找到', data=None):
+    return _resp(status_code, message, data)
+    # raise NotFoundException(code=code, message=message, data=data)

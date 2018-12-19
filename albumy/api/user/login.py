@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask_restful import reqparse
 
-from albumy.common.restful import RestfulBase, success_resp
+from albumy.common.restful import RestfulBase, success_response
 
 
 class UserLogin(RestfulBase):
@@ -12,4 +12,4 @@ class UserLogin(RestfulBase):
         args = req.parse_args()
         print(args)
 
-        return success_resp()
+        return success_response()
