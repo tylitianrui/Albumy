@@ -1,19 +1,13 @@
 # -*- coding: utf-8 -*-
 from flask_restful import Resource
 
-from albumy.common.excptions import AlbBaseException, BadRequestException, UnauthorizedException, ForbiddenException, \
-    NotFoundException
-from albumy.settings import BaseConfig
-from albumy.utils.cache import get_cache_redis
-
 
 class RestfulBase(Resource):
-    cache_redis = get_cache_redis(BaseConfig.get("CACHE_REDIS_URL"))
+    pass
 
 
 def _resp(status_code=200, message="ok", data=None):
     """
-
     :param message:
     :param status_code:
     :param data:
@@ -33,7 +27,7 @@ def success_response(status_code=200, message="ok", data=None):
 
 
 def raise_400_response(status_code=400, message=u'请求参数错误', data=None):
-    return _resp(status_code,message,data)
+    return _resp(status_code, message, data)
 
 
 def raise_401_response(status_code=401, message=u'请求未授权', data=None):

@@ -9,9 +9,8 @@ from flask_script import Manager
 
 from albumy.app import create_app
 
-from albumy.settings import BaseConfig, DevConfig, get_config
+from albumy.settings import get_config
 from albumy.models import *
-from albumy.utils.cache import get_cache_redis
 
 config = get_config()
 app = create_app(config=config)

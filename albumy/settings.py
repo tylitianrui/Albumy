@@ -6,15 +6,16 @@ import os
 
 class BaseConfig(object):
     BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+    DOMAIN = ""
 
     SECRET_KEY = "w1rr1lelsnvorhjfob2ctc*!@adcvgtvrt@@1"
     # mysql
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    # SQLALCHEMY_DATABASE_URI = 'mysql://root:@localhost:3306/albumy?charset=utf8mb4'
     SQLALCHEMY_DATABASE_URI = 'mysql://root:@localhost:3306/albumy?charset=utf8mb4'
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
 
-    # # redis 缓存
+    # 使用redis缓存
+    # CACHE_TYPE = "simple"
     CACHE_REDIS_URL = "redis://@localhost:6379/2"
 
     # 邮件
@@ -57,14 +58,27 @@ class DevConfig(BaseConfig):
 
 class ProdConfig(BaseConfig):
     pass
+    # DOMAIN = ""
+
 
 class LocalConfig(BaseConfig):
-    DEBUG=True
-
+    DEBUG = True
+    DOMAIN = "http://localhost:5000"
 
 
 def get_config():
-    return LocalConfig
+    """
+    获取配置文件
+    :return:
+    """
+    _env_mode = os.environ.get("ENV_MODE", "")
+    _config = {
+        "prod": ProdConfig,
+        "dev": DevConfig,
+        "local": LocalConfig
+    }
+    config = _config.get(_env_mode)
+    return config if config else LocalConfig
 
 
 if __name__ == '__main__':

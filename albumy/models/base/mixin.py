@@ -3,7 +3,7 @@
 # TIME :2018/11/23
 from flask import current_app
 from flask_login import UserMixin
-from itsdangerous import Serializer
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 from albumy.extensions import db, bcrypt
 
@@ -48,7 +48,7 @@ class CRUDMixin(object):
             :param kv: {k:v}
             :return:
             """
-        kv.update({"id_deleted": False})
+
         _instance = cls(**kv)
         if _instance.query.filter_by(**kv).first():
             return True
@@ -63,9 +63,6 @@ class DeclarePK(object):
         return cls.query.get(id)
 
 
-
-
-
 class PasswordUserMixin(UserMixin):
     password_hash = db.Column(db.String(128), nullable=True)
 
@@ -77,6 +74,7 @@ class PasswordUserMixin(UserMixin):
         :return:
         """
         # 密码
+
         self.password_hash = bcrypt.generate_password_hash(password)
         if commit:
             self.save()
@@ -87,7 +85,8 @@ class PasswordUserMixin(UserMixin):
         :param value:
         :return:
         """
-        return bcrypt.check_password_hash(self.password, value)
+
+        return bcrypt.check_password_hash(self.password_hash, value)
 
     def generate_auth_token(self, expire=3600 * 24 * 12):
         """
@@ -103,5 +102,5 @@ class PasswordUserMixin(UserMixin):
         return "无权限"
 
     @password.setter
-    def password(self,password):
+    def password(self, password):
         self.set_hash_password(password)

@@ -1,15 +1,25 @@
 # -*- coding: utf-8 -*-
-from flask_restful import reqparse
+from datetime import datetime
+
+from flask import g
 
 from albumy.common.restful import RestfulBase, success_response
+from albumy.extensions import varify_password
 
 
 class UserLogin(RestfulBase):
+    @varify_password
     def post(self):
-        req = reqparse.RequestParser()
-        req.add_argument("test")
-        req.add_argument("hello",)
-        args = req.parse_args()
-        print(args)
-
-        return success_response()
+        user = g.current_user
+        login_time = datetime.now()
+        fields = {
+            "last_login":login_time
+        }
+        user.update(**fields)
+        token = user.generate_auth_token()
+        data = {
+            "user_id": user.id,
+            "user_name": user.user_name,
+            "token": token
+        }
+        return success_response(data)
