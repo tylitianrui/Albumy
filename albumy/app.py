@@ -28,7 +28,10 @@ def init_extensions(app):
 
 def register_blueprint(app):
     from albumy.api.user import user_blueprint
+    from albumy.api.follower import follower_blueprint
+
     app.register_blueprint(user_blueprint)
+    app.register_blueprint(follower_blueprint)
     return None
 
 

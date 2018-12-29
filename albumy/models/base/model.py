@@ -14,3 +14,5 @@ class BaseModel(CRUDMixin, db.Model):
     created_at = db.Column(db.DateTime,default=dt.now)
     updated_at = db.Column(db.DateTime,default=dt.now)
 
+
+

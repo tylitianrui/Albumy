@@ -114,3 +114,21 @@ def declare_foreign_key(table, pk='id', nullable=False, **kwargs):
     return db.Column(
         db.ForeignKey('{}.{}'.format(table, pk)),
         nullable=nullable, **kwargs)
+
+
+def declare_union_index(table_name_in_db, *args):
+    # todo
+    """
+    声明复合索引
+    :param table_name_in_db: 在数据库里面的表名
+    :param args: [(a,b),(c,d),(e,f,g)]  声明三个复合索引a_b, c_d,  e_f_g
+    :return:
+    """
+    uixs = []
+    for uix in  args:
+        uixs.append(db.UniqueConstraint(uix, name='uix_{}_{}'.format(table_name_in_db,"_".join(uix))),)
+
+    return (
+        db.UniqueConstraint('user_id', 'post_id', name='uix_user_post_user_id_post_id'),
+        db.Index('ix_user_post_user_id_insert_time', 'user_id', 'insert_time'),
+    )
