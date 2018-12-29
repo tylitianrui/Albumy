@@ -20,6 +20,12 @@ def validate_email(email):
     return validate_fail(email)
 
 
+def validate_email_or_mobile(email_or_mobile):
+
+        return email_or_mobile
+
+
+
 def validate_username(username):
     ret = re.match(USERNAME_PATTERN, username)
     if ret:
@@ -43,4 +49,3 @@ def validate_fail(field, msg=""):
     if msg:
         _msg += msg
     raise Exception(_msg)
-

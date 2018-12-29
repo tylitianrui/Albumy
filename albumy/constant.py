@@ -13,14 +13,18 @@ PASSWORD_PATTERN = re.compile("\w{6,16}")  # 密码
 # email topic
 EMAIL_TOPIC = {
     "REGISTER_ACTIVATE": {
-        "subject":"激活账号",
-        "body":"激活账号：url {}".format(1),
+        "subject": "激活账号",
+        "body": "激活账号：url {}".format(1),
         # "resource":"https://img-blog.csdnimg.cn/20181104102458943.png",
-        "resource":"/Users/tyltr/mySpace/Albumy/Albumy/albumy/static/image/attachment_test_jpg.jpg",
+        "resource": "/Users/tyltr/mySpace/Albumy/Albumy/albumy/static/image/attachment_test_jpg.jpg",
 
-
+    },
+    "RESET_PASSWORD": {
+        "subject": "重置密码",
+        "body": "激活账号：url {}".format(1),
 
     }
+
 }
 
 STATIC_FILES = ["base.html"]
@@ -29,5 +33,3 @@ STATIC_FILES = ["base.html"]
 USER_REGISTERED = 101  # 用户已注册,但未激活
 USER_ACTIVE = 102  # 用户账号已经激活
 USER_DELETE = 103  # 用户账号注销
-
-

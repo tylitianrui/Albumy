@@ -10,11 +10,9 @@ from albumy.constant import EMAIL_TOPIC
 from albumy.extensions import mail
 
 
-
-
 @celery_app.task
-def send_email(topic,recipients,**kwargs):
-    topic = EMAIL_TOPIC.get(topic,"")
+def send_email(topic, recipients, **kwargs):
+    topic = EMAIL_TOPIC.get(topic, "")
 
     if topic:
         topic.update(kwargs)
@@ -28,10 +26,10 @@ def send_email(topic,recipients,**kwargs):
             # 收信者
             recipients=[recipients],
             # 正文
-            body=topic.get("body")
+            body=kwargs.get("body") if kwargs.get("body") else topic.get("body"),
 
         )
-        resource = topic.get("resource","")
+        resource = topic.get("resource", "")
         # 添加附件
         if resource:
             with flask_app.open_resource(resource) as fp:
@@ -53,7 +51,3 @@ def send_emails(users):
                           subject=subject)
 
             conn.send(msg)
-
-
-
-

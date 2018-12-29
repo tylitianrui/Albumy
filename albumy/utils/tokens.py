@@ -5,7 +5,7 @@ from flask import current_app
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, SignatureExpired, BadSignature
 
 
-def generate_confirm_token(obj, expiration_in=60):
+def generate_confirm_token(obj, expiration_in=60*5):
     s = Serializer(current_app.config['SECRET_KEY'], expiration_in)
     return s.dumps({'confirm': obj})
 

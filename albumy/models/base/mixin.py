@@ -1,6 +1,8 @@
 # -*-coding:utf-8-*-
 # AUTHOR:tyltr
 # TIME :2018/11/23
+from datetime import datetime
+
 from flask import current_app
 from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
@@ -26,6 +28,8 @@ class CRUDMixin(object):
         """Update specific fields of a record."""
         for attr, value in kwargs.items():
             setattr(self, attr, value)
+        # 更新时间
+        setattr(self, "updated_at", datetime.now())
 
         return commit and self.save() or self
 
@@ -104,3 +108,9 @@ class PasswordUserMixin(UserMixin):
     @password.setter
     def password(self, password):
         self.set_hash_password(password)
+
+
+def declare_foreign_key(table, pk='id', nullable=False, **kwargs):
+    return db.Column(
+        db.ForeignKey('{}.{}'.format(table, pk)),
+        nullable=nullable, **kwargs)

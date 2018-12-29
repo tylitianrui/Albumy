@@ -3,3 +3,4 @@
 # TIME :2018/11/20
 
 from .user import *
+from .follower import *

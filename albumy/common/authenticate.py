@@ -1,7 +1,7 @@
 # # -*- coding: utf-8 -*-
 from flask import current_app, request, g
 from flask_httpauth import HTTPBasicAuth
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, SignatureExpired
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from sqlalchemy import or_
 
 from albumy.constant import USER_ACTIVE
@@ -44,7 +44,7 @@ class BaseAuth(object):
             token = username_or_token
         if token:
             user = get_user_from_auth_token(token, self._model)
-            if user and user.active==USER_ACTIVE:
+            if user and user.active == USER_ACTIVE:
                 g.current_user = user
                 return True
 
