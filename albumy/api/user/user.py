@@ -7,7 +7,7 @@ from albumy.common.restful import RestfulBase, success_response, raise_400_respo
 from albumy.constant import USER_REGISTERED, USER_ACTIVE
 from albumy.extensions import redis_client
 
-from albumy.models import User as Usermodel
+from albumy.models import User as Usermodel, UserProfile
 
 from albumy.utils.gen_default import gen_user_name
 from albumy.utils.tokens import generate_confirm_token, parse_confirm_token
@@ -76,25 +76,31 @@ class User(RestfulBase):
                 }
 
                 _user = Usermodel.create(**_fields)
+                profile = {
+                    "user_id": _user.id,
+                    "nickname": _user.user_name,
+                    "head_url": "",
+                    "gender": True
+                }
+                UserProfile.create(**profile)
 
                 _token = generate_confirm_token(_user.id).decode("utf-8")
                 try:
                     # 激活码
-                    redis_client.setex("register_token_user_id_{}".format(_user.id), time=3*60, value=_token)
+                    redis_client.setex("register_token_user_id_{}".format(_user.id), time=3 * 60, value=_token)
                 except Exception as err:
                     raise Exception(err)
 
                 try:
                     # todo 邮件通知
                     send_email.delay("REGISTER_ACTIVATE", args["email"],
-                                     body="{}/api/user/user/{}".format(current_app.config["DOMAIN"],_token))
+                                     body="{}/api/user/user/{}".format(current_app.config["DOMAIN"], _token))
 
                 except Exception as err:
                     return "send"
                 data = dict(
-                    # confirmed="{}/api/user/user/{}".format(current_app.config["DOMAIN"], _token),
+                    confirmed="{}/api/user/user/{}".format(current_app.config["DOMAIN"], _token),
 
                 )
 
                 return success_response(data=data)
-
