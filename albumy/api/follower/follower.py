@@ -5,8 +5,9 @@ from flask import g
 from flask_restful import reqparse
 
 from albumy.common.restful import RestfulBase, raise_400_response, success_response
-from albumy.extensions import login_required
-from albumy.models import User, FollowerModel
+from albumy.constant import USER_ACTIVE
+from albumy.extensions import login_required, db
+from albumy.models import User, User as  UserModel, FollowerModel, UserProfile
 
 
 class Follower(RestfulBase):
@@ -41,3 +42,21 @@ class Follower(RestfulBase):
 
             follow_relationship.update(**fields)
             return success_response(status_code=0, message="关注成功")
+
+
+class FollowerList(RestfulBase):
+    @login_required
+    def get(self, type=None):
+        current_user = g.current_user
+
+        # 默认是我关注的人
+        if not type:
+            starts = db.session.query(User, FollowerModel, UserProfile) \
+                .join(FollowerModel, FollowerModel.uid == User.id) \
+                .join(UserProfile, UserProfile.user_id == FollowerModel.fid) \
+                .filter(User.id == current_user.id) \
+                .with_entities(UserProfile.user_id, UserProfile.nickname, UserProfile.head_url) \
+                .all()
+            key = ["user_id", "user_nickname", "user_head_url"]
+            data = [dict(zip(key, start)) for start in starts]
+            return success_response(data=data)
