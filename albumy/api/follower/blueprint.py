@@ -8,5 +8,5 @@ follower_blueprint = Blueprint("follower", __name__, url_prefix="/api")
 follower_api = Api(follower_blueprint, prefix="/follower")
 
 follower_api.add_resource(Follower, "")
-follower_api.add_resource(FollowerList, "/list/<int:type>","/list")
+follower_api.add_resource(FollowerList, "/list/<string:type>")
 

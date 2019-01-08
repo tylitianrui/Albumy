@@ -2,30 +2,27 @@
 # AUTHOR:tyltr
 # TIME :2018/11/20
 
-from albumy.constant import *
-from flask import render_template, abort
+from flask import render_template
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 
 from albumy.app import create_app
-
-from albumy.settings import get_config
+from albumy.constant import *
 from albumy.models import *
+from albumy.settings import get_config
 
 config = get_config()
 app = create_app(config=config)
-# print(app.name)
 
-# cache_redis=get_cache_redis(app.config["CACHE_REDIS_URL"])
 manager = Manager(app)
 
 Migrate(app, db)
 manager.add_command("db", MigrateCommand)
 
+
 @app.route("/test")
 def hello():
-    return  "hello"
-
+    return "hello"
 
 
 @app.route("/static/<regex('\w*\.{0,1}\w*'):filename>")

@@ -48,15 +48,29 @@ class FollowerList(RestfulBase):
     @login_required
     def get(self, type=None):
         current_user = g.current_user
-
+        print(current_user.id)
         # 默认是我关注的人
-        if not type:
-            starts = db.session.query(User, FollowerModel, UserProfile) \
+        if type == "follow":
+            follow = db.session.query(User, FollowerModel, UserProfile) \
                 .join(FollowerModel, FollowerModel.uid == User.id) \
                 .join(UserProfile, UserProfile.user_id == FollowerModel.fid) \
                 .filter(User.id == current_user.id) \
                 .with_entities(UserProfile.user_id, UserProfile.nickname, UserProfile.head_url) \
                 .all()
-            key = ["user_id", "user_nickname", "user_head_url"]
-            data = [dict(zip(key, start)) for start in starts]
+            _key = ["user_id", "user_nickname", "user_head_url"]
+            data = [dict(zip(_key, start)) for start in follow]
             return success_response(data=data)
+        elif type == "star":
+            star = db.session.query(User, FollowerModel, UserProfile) \
+                .join(FollowerModel, FollowerModel.fid == User.id) \
+                .join(UserProfile, UserProfile.user_id == FollowerModel.uid) \
+                .filter(User.id == current_user.id) \
+                .with_entities(UserProfile.user_id, UserProfile.nickname, UserProfile.head_url) \
+                .all()
+
+            _key = ["user_id", "user_nickname", "user_head_url"]
+            data = [dict(zip(_key, item)) for item in star]
+
+            return success_response(data=data)
+        else:
+            return raise_400_response()
