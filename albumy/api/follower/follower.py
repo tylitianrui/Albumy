@@ -4,10 +4,10 @@ from datetime import datetime
 from flask import g
 from flask_restful import reqparse
 
+from albumy.api.follower import Const
 from albumy.common.restful import RestfulBase, raise_400_response, success_response
-from albumy.constant import USER_ACTIVE
 from albumy.extensions import login_required, db
-from albumy.models import User, User as  UserModel, FollowerModel, UserProfile
+from albumy.models import User, FollowerModel, UserProfile
 
 
 class Follower(RestfulBase):
@@ -48,7 +48,6 @@ class FollowerList(RestfulBase):
     @login_required
     def get(self, type=None):
         current_user = g.current_user
-        print(current_user.id)
         # 默认是我关注的人
         if type == "follow":
             follow = db.session.query(User, FollowerModel, UserProfile) \
@@ -59,6 +58,8 @@ class FollowerList(RestfulBase):
                 .all()
             _key = ["user_id", "user_nickname", "user_head_url"]
             data = [dict(zip(_key, start)) for start in follow]
+            if not data:
+                data = Const.NO_FOLLOW_ANYONE
             return success_response(data=data)
         elif type == "star":
             star = db.session.query(User, FollowerModel, UserProfile) \
@@ -70,6 +71,8 @@ class FollowerList(RestfulBase):
 
             _key = ["user_id", "user_nickname", "user_head_url"]
             data = [dict(zip(_key, item)) for item in star]
+            if not data:
+                data = Const.NOONE_FOLLOW_YOU
 
             return success_response(data=data)
         else:
