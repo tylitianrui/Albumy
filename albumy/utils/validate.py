@@ -21,9 +21,7 @@ def validate_email(email):
 
 
 def validate_email_or_mobile(email_or_mobile):
-
-        return email_or_mobile
-
+    return email_or_mobile
 
 
 def validate_username(username):
@@ -49,3 +47,19 @@ def validate_fail(field, msg=""):
     if msg:
         _msg += msg
     raise Exception(_msg)
+
+
+def validate_nickname(nickname):
+    nickname = nickname.replace(" ", "")
+    if 2 < len(nickname) < 12:
+        return nickname
+    msg = "昵称为2-12个字符"
+    return validate_fail(nickname, msg)
+
+
+def validate_age(age):
+    _age = int(age)
+    if 0 < _age <= 120:
+        return _age
+    msg = "年龄在0-120岁之间"
+    return validate_fail(age, msg)

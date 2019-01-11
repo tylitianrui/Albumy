@@ -28,7 +28,7 @@ class UserProfile(DeclarePK, BaseModel):
     user_id = declare_foreign_key("alb_user")
     nickname = db.Column(db.String(16), default="", index=True)
     age = db.Column(db.Integer, default=0, index=True)
-    head_url = db.Column(db.String(120), default="", nullable=True)
-    gender = db.Column(db.Integer, nullable=True, default=0)  # 1 男 2 女  0 未设置
+    head_url = db.Column(db.String(120), default="")
+    gender = db.Column(db.Integer,  default=0)  # 1 男 2 女  0 未设置
 
 
