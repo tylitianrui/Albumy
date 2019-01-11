@@ -16,4 +16,4 @@ user_api = Api(user_blueprint, prefix="/user",
 user_api.add_resource(UserLogin, "/login")
 user_api.add_resource(User, "/user", "/user/<token>")
 user_api.add_resource(Password, "/password","/password/<token>")
-user_api.add_resource(Profile, "/profile")
+user_api.add_resource(Profile, "/profile","/profile/<user_id>")

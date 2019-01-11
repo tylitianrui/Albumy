@@ -5,12 +5,26 @@ from flask_restful import reqparse
 from albumy.common.restful import RestfulBase, success_response
 from albumy.extensions import login_required
 from albumy.models import UserProfile
-from albumy.utils.validate import validate_password, validate_nickname, validate_age
+from albumy.utils.validate import validate_nickname, validate_age
 
 
 class Profile(RestfulBase):
+    def get(self, user_id=None):
+        if not user_id:
+            return self._get_self_info()
+        user_profile = UserProfile.query.filter_by(user_id=user_id).first()
+        if user_profile:
+            data = {
+                "user_id": user_profile.user_id,
+                "nickname": user_profile.nickname,
+                "age": user_profile.age,
+                "head_url": user_profile.head_url,
+                "gender": user_profile.gender,
+            }
+            return success_response(data=data)
+
     @login_required
-    def get(self):
+    def _get_self_info(self):
         user = g.current_user
         user_profile = UserProfile.query.filter_by(user_id=user.id).first()
         data = {
@@ -18,7 +32,9 @@ class Profile(RestfulBase):
             "nickname": user_profile.nickname,
             "age": user_profile.age,
             "head_url": user_profile.head_url,
-            "gender": user_profile.gender
+            "gender": user_profile.gender,
+            "name": user_profile.name,
+            "address": user_profile.address
         }
         return success_response(data=data)
 
