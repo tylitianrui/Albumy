@@ -92,7 +92,7 @@ class PasswordUserMixin(UserMixin):
 
         return bcrypt.check_password_hash(self.password_hash, value)
 
-    def generate_auth_token(self, expire=3600 * 24 * 12):
+    def generate_auth_token(self, expire=60 * 60 * 24 * 12):
         """
         产生认证token
         :param expire: token过期时间

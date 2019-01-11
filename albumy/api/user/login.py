@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 
-from flask import g
+from flask import g, current_app
 
 from albumy.common.restful import RestfulBase, success_response
 from albumy.extensions import varify_password
@@ -16,7 +16,7 @@ class UserLogin(RestfulBase):
             "last_login":login_time
         }
         user.update(**fields)
-        token = user.generate_auth_token()
+        token = user.generate_auth_token(current_app.config["AUTH_TOKEN_EXPIRED_TIME"])
         data = {
             "user_id": user.id,
             "user_name": user.user_name,

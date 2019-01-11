@@ -46,6 +46,8 @@ class BaseConfig(object):
 
     # 接受的内容类型
     CELERY_ACCEPT_CONTENT = ["json", "msgpack"]
+    # authorization的过期时间
+    AUTH_TOKEN_EXPIRED_TIME = 3600 * 24 * 12
 
     @classmethod
     def get(cls, key):
@@ -64,6 +66,8 @@ class ProdConfig(BaseConfig):
 class LocalConfig(BaseConfig):
     DEBUG = True
     DOMAIN = "http://localhost:5000"
+    AUTH_TOKEN_EXPIRED_TIME = 3600*24 * 356
+
 
 
 def get_config():
