@@ -13,6 +13,7 @@ class BaseModel(CRUDMixin, db.Model):
     # 创建 更新时间
     created_at = db.Column(db.DateTime,default=dt.now)
     updated_at = db.Column(db.DateTime,default=dt.now)
+    is_delete = db.Column(db.Boolean,default=False,nullable=False)
 
 
 

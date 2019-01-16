@@ -20,6 +20,7 @@ class User(DeclarePK, PasswordUserMixin, BaseModel):
     mobile = db.Column(db.String(11), default="", index=True)
     active = db.Column(db.Integer, default=constant.USER_REGISTERED, unique=False)
     last_login = db.Column(db.DateTime, default=dt.now, index=True)
+    # role_code = declare_foreign_key("alb_role")
 
 
 class UserProfile(DeclarePK, BaseModel):

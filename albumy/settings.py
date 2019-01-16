@@ -11,7 +11,7 @@ class BaseConfig(object):
     SECRET_KEY = "w1rr1lelsnvorhjfob2ctc*!@adcvgtvrt@@1"
     # mysql
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = 'mysql://root:@localhost:3306/albumy?charset=utf8mb4'
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:my@localhost:3306/albumy?charset=utf8mb4'
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
 
     # 使用redis缓存
@@ -67,6 +67,7 @@ class LocalConfig(BaseConfig):
     DEBUG = True
     DOMAIN = "http://localhost:5000"
     AUTH_TOKEN_EXPIRED_TIME = 3600*24 * 356
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:@localhost:3306/albumy?charset=utf8mb4'
 
 
 
