@@ -12,13 +12,38 @@ class Albumy(DeclarePK, BaseModel):
 
     def get_info(self):
         data = {
-            "id":self.id,
-            "title":self.title,
-            "sort_id":self.sort_id,
-            "cap":self.cap,
-            "visible":self.visible
+            "id": self.id,
+            "title": self.title,
+            "sort_id": self.sort_id,
+            "cap": self.cap
+
         }
         return data
+
+    def get_all_info(self):
+        data = {
+            "id": self.id,
+            "title": self.title,
+            "sort_id": self.sort_id,
+            "cap": self.cap,
+            "visible": self.visible,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at
+        }
+        return data
+
+    def get_all_info_serializable(self):
+        data = {
+            "id": self.id,
+            "title": self.title,
+            "sort_id": self.sort_id,
+            "cap": self.cap,
+            "visible": self.visible,
+            "created_at": self.datetime_serializable("created_at"),
+            "updated_at": self.datetime_serializable("updated_at")
+        }
+        return data
+
 
 
 class PostSort(DeclarePK, BaseModel):
@@ -47,6 +72,3 @@ class PhotoLike(DeclarePK, BaseModel):
     __tablename__ = "alb_photo_like"
     photo_id = declare_foreign_key("alb_photo")
     user_id = declare_foreign_key("alb_user")
-
-
-

@@ -33,3 +33,7 @@ STATIC_FILES = ["base.html"]
 USER_REGISTERED = 101  # 用户已注册,但未激活
 USER_ACTIVE = 102  # 用户账号已经激活
 USER_DELETE = 103  # 用户账号注销
+
+# 时间格式
+DATE_TIME = "%Y-%m-%d %H:%M:%S"
+DATE = "%Y-%m-%d"

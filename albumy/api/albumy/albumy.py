@@ -26,4 +26,11 @@ class Albumy(RestfulBase):
         )
 
         albumy = AlbumyModel.create(**fields)
-        return success_response(status_code=201, data=albumy.get_info(), message="创建成功")
+        return success_response(status_code=201, data=albumy.get_all_info(), message="创建成功")
+
+    @login_required
+    def get(self):
+        user = g.current_user
+        albumies = AlbumyModel.query.filter_by(user_id=user.id, is_delete=False).all()
+        data = [albumy.get_all_info_serializable() for albumy in albumies if albumy]
+        return success_response(data=data)
