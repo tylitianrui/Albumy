@@ -29,8 +29,13 @@ class Albumy(RestfulBase):
         return success_response(status_code=201, data=albumy.get_all_info(), message="创建成功")
 
     @login_required
-    def get(self):
+    def get(self, id=None):
         user = g.current_user
-        albumies = AlbumyModel.query.filter_by(user_id=user.id, is_delete=False).all()
-        data = [albumy.get_all_info_serializable() for albumy in albumies if albumy]
+        albumy_query = AlbumyModel.query.filter_by(user_id=user.id, is_delete=False)
+        if not id:
+            albumies = albumy_query.all()
+            data = [albumy.get_all_info_serializable() for albumy in albumies if albumy]
+            return success_response(data=data)
+        albumy = albumy_query.filter_by(id=id).first()
+        data = albumy.get_all_info_serializable()
         return success_response(data=data)
