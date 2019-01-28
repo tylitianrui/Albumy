@@ -5,3 +5,4 @@
 from .user import *
 from .follower import *
 from .role import *
+from .albumy import *

@@ -10,11 +10,20 @@ class Albumy(DeclarePK, BaseModel):
     cap = db.Column(db.Integer, nullable=False)  # 容量
     visible = db.Column(db.Integer, nullable=False)  # 可见，例如尽自己、粉丝可见。。。。
 
+    def get_info(self):
+        data = {
+            "id":self.id,
+            "title":self.title,
+            "sort_id":self.sort_id,
+            "cap":self.cap,
+            "visible":self.visible
+        }
+        return data
+
 
 class PostSort(DeclarePK, BaseModel):
     """相册分类"""
     __tablename__ = "alb_post_sort"
-    user_id = declare_foreign_key("alb_user")
     name = db.Column(db.String(20), nullable=False)
     desc = db.Column(db.String(50), nullable=False)
 
