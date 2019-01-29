@@ -2,10 +2,10 @@
 from flask import g
 from flask_restful import reqparse
 
-from albumy.api.albumy.const import VISIBLE_PUBLIC, TYPE_DEFAULT
-from albumy.common.restful import RestfulBase, success_response
-from albumy.extensions import login_required
-from albumy.models import Albumy as AlbumyModel
+from albumy.api.albumy.const import VISIBLE_PUBLIC, TYPE_DEFAULT, VISBLE_PRIVATE
+from albumy.common.restful import RestfulBase, success_response, raise_401_response
+from albumy.extensions import login_required, db
+from albumy.models import Albumy as AlbumyModel, Photo as PhotoModel, FollowerModel
 
 
 class Albumy(RestfulBase):
@@ -39,3 +39,20 @@ class Albumy(RestfulBase):
         albumy = albumy_query.filter_by(id=id).first()
         data = albumy.get_all_info_serializable()
         return success_response(data=data)
+
+
+class AlbumyPhoto(RestfulBase):
+    @login_required
+    def get(self, albumy_id):
+        user = g.current_user
+        albumy = AlbumyModel.get_by_id(albumy_id)
+        if user.id != albumy.user_id:
+            rel = FollowerModel.query.filter_by(uid=user.id, fid=albumy.user_id).first()
+            if (not rel and albumy.visible != VISIBLE_PUBLIC) or (rel and albumy.visible == VISBLE_PRIVATE):
+                return raise_401_response()
+        photo_list = PhotoModel.query.filter_by(albumy_id=albumy_id).all()
+        data =[photo.get_all_info_serializable() for  photo  in  photo_list if  photo]
+        return success_response(data=data)
+
+
+

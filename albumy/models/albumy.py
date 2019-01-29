@@ -45,7 +45,6 @@ class Albumy(DeclarePK, BaseModel):
         return data
 
 
-
 class PostSort(DeclarePK, BaseModel):
     """相册分类"""
     __tablename__ = "alb_post_sort"
@@ -58,6 +57,18 @@ class Photo(DeclarePK, BaseModel):
     albumy_id = declare_foreign_key("albumy")
     title = db.Column(db.String(20), nullable=False)
     url = db.Column(db.String(100), nullable=False)
+
+    def get_all_info_serializable(self):
+        data = {
+            "id": self.id,
+            "title": self.title,
+            "url": self.url,
+            "created_at": self.datetime_serializable("created_at"),
+            "updated_at": self.datetime_serializable("updated_at")
+        }
+        return data
+
+
 
 
 class Comment(DeclarePK, BaseModel):
