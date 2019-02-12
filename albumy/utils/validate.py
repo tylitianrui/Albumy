@@ -63,3 +63,16 @@ def validate_age(age):
         return _age
     msg = "年龄在0-120岁之间"
     return validate_fail(age, msg)
+
+
+def validate_comment(comment):
+    """
+    验证评论的正确性
+    :param comment:
+    :return:
+    """
+    comment = str(comment)
+    if 10 < len(comment) < 100:
+        return comment
+    msg = "评论的内容大于10个字符，小于100个"
+    return validate_fail(comment, msg)
