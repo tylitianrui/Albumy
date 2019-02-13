@@ -69,14 +69,23 @@ class Photo(DeclarePK, BaseModel):
         return data
 
 
-
-
 class Comment(DeclarePK, BaseModel):
     __tablename__ = "alb_photo_comment"
     photo_id = declare_foreign_key("alb_photo")
     user_id = declare_foreign_key("alb_user")
     content = db.Column(db.String(100), nullable=False)
-    parent_id = declare_foreign_key("alb_photo_comment")
+    parent_id = declare_foreign_key("alb_photo_comment", nullable=True)
+
+    def get_comment(self):
+        data = dict(
+            id= self.id,
+            photo_id=self.photo_id,
+            user_id=self.user_id,
+            content=self.content,
+            parent_id=self.parent_id if self.parent_id else '',
+            updated_at =self.datetime_serializable("updated_at")
+        )
+        return data
 
 
 class PhotoLike(DeclarePK, BaseModel):

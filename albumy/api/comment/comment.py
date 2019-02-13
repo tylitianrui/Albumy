@@ -11,13 +11,14 @@ from albumy.utils.validate import validate_comment
 
 class Comment(RestfulBase):
     @login_required
-    def get(self, photo_id=None):
-        if not photo_id:
+    def get(self, comment_id=None):
+        if not comment_id:
             return raise_400_response()
-        photo = PhotoModel.get_by_id(photo_id)
-        if not photo:
+        comment = CommentModel.get_by_id(comment_id)
+        if not comment:
             return raise_404_response()
-        # todo  获取评论
+        return success_response(data=comment.get_comment())
+
 
     @login_required
     def post(self):
