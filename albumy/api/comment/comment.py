@@ -35,6 +35,6 @@ class Comment(RestfulBase):
             "content": args["content"]
         }
         if args["parent_comment"]:
-            args["parent_id"] = args["parent_comment"]
+            fields["parent_id"] = args["parent_comment"]
         comment = CommentModel.create(**fields)
         return success_response(status_code=201, message="创建成功")

@@ -31,11 +31,13 @@ def register_blueprint(app):
     from albumy.api import follower_blueprint
     from albumy.api import albumy_blueprint
     from albumy.api import comment_blueprint
+    from albumy.api import photo_comment_blueprint
 
     app.register_blueprint(user_blueprint)
     app.register_blueprint(follower_blueprint)
     app.register_blueprint(albumy_blueprint)
     app.register_blueprint(comment_blueprint)
+    app.register_blueprint(photo_comment_blueprint)
     return None
 
 
