@@ -1,9 +1,29 @@
 # -*- coding: utf-8 -*-
 from flask_restful import Resource
+from werkzeug.exceptions import HTTPException
+
+from albumy.common.excptions import AlbBaseException
 
 
 class RestfulBase(Resource):
-    pass
+
+    def pre_request(func):
+        """
+        请求的执行前，执行
+        :return:
+        """
+
+        def method(*args, **kwargs):
+            try:
+                return func(*args, **kwargs)
+            except AlbBaseException as err:
+                return err.__str__(), err.http_status_code
+            except HTTPException as err:
+                return err.get_response()
+
+        return method
+
+    method_decorators = [pre_request]
 
 
 def _resp(status_code=200, message="ok", data=None):
