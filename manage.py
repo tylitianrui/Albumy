@@ -20,9 +20,10 @@ Migrate(app, db)
 manager.add_command("db", MigrateCommand)
 
 
-@app.route("/test")
-def hello():
-    return "hello"
+@app.route("/")
+def welcome():
+    return "<h1>welcome! </br> this is albumy!<h1>"
+
 
 
 @app.route("/static/<regex('\w*\.{0,1}\w*'):filename>")
