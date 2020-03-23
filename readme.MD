@@ -1,9 +1,50 @@
 # Albumy   
-## 思路基于李辉的项目，代码自己写的。restful
-### 启动celery
-在项目目录下（即Albumy下）执行  celery -B  -A albumy.celery_worker  worker  就会把beat   celery都启动啦 
-##
-- 1.本项目采用id进行请求数据，安全性很差。爬虫可根据id递增，进行爬取的数据
-- 2.python项目很多互联网产品，一旦获取token后，几乎获取到全部权限，不安全
+图片社交项目-后端python
+
+## 1.开发环境
+macos + vacode + python3.6 
 
 
+## 2.技术说明
+### 1.虚拟环境
+python版本: python 3.7
+#### 1. **安装virtualenv**
+此项目安装依赖都在虚拟环境之中，对外封闭。  
+```
+pip3 install virtualenv
+````
+或者使用国内源 
+```
+pip3 install virtualenv  -i https://pypi.tuna.tsinghua.edu.cn/simple/
+```
+
+#### 2.创建虚拟环境
+在项目目录下,执行：  
+```
+virtualenv -p $(which  python3) venv
+```
+#### 3.激活虚拟环境
+
+```
+source venv/bin/activate
+```
+退出虚拟环境
+```
+deactivate
+```
+
+#### 3. 依赖管理
+导出依赖
+```
+pip freeze > requirements.txt
+```
+安装依赖
+```
+pip install -r requirements.txt
+```
+注：
+- txt格式是为了照顾使用win进行开发的伙伴
+- 安装依赖包可以使用国内源，例如: `pip install flask  -i https://mirrors.aliyun.com/pypi/simple` 或者 `pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple`
+
+## 3. 文档
+[文档](./docs/catalog.md)
