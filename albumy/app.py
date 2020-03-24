@@ -27,17 +27,24 @@ def init_extensions(app):
 
 
 def register_blueprint(app):
+    """
+    注册蓝图
+    :param app:
+    :return:
+    """
     from albumy.api import user_blueprint
     from albumy.api import follower_blueprint
     from albumy.api import albumy_blueprint
     from albumy.api import comment_blueprint
     from albumy.api import photo_comment_blueprint
+    from albumy.api import opt_blueprint     # 此为维护等信息的接口
 
     app.register_blueprint(user_blueprint)
     app.register_blueprint(follower_blueprint)
     app.register_blueprint(albumy_blueprint)
     app.register_blueprint(comment_blueprint)
     app.register_blueprint(photo_comment_blueprint)
+    app.register_blueprint(opt_blueprint)
     return None
 
 
